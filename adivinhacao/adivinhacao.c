@@ -11,7 +11,17 @@ int main() {
     printf("Qual o seu chute? ");
     scanf("%d", &chute);
 
-    printf("Seu chute foi %d", chute);
+    printf("Seu chute foi %d \n", chute);
+
+    if(chute == num) {
+        printf("Parabrns! Voce acertou o numero");
+    } else if(chute > num) {
+        printf("Voce errou :(\n");
+        printf("O número é menor");
+    } else {
+        printf("Voce errou :(\n");
+        printf("O número é maior");
+    }
 
     return 0;
 }
