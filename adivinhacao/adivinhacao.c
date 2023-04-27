@@ -1,10 +1,13 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define NUMERO_DE_TENTATIVAS 5
 
-int acerto(int acertou, int maior) {
+int acerto(int acertou, int maior, double ptns) {
     if(acertou) {
         printf("Parabéns! Você acertou o número <3\n");
+        printf("Total de pontos: %.1f\n", ptns);
         return 1;
     }
     printf("Voce errou :(\n");
@@ -21,8 +24,13 @@ int main() {
     printf("* Bem vindo ao nosso jogo de adivinhação! *\n");
     printf("*******************************************\n");
 
-    int num = 17;
+    int segundos = time(0);
+    srand(segundos);
+
+    int numeroGrandao = rand();
+    int num = numeroGrandao % 100;
     int chute, lim;
+    double pontos = 1000.0;
 
     while(1) {
         printf("Deseja jogar com número de tentativas limitadas?\n");
@@ -46,13 +54,16 @@ int main() {
 
                 int acertou = chute == num;
                 int maior = chute > num;
-                if(acerto(acertou, maior) == 1) return 0;
+                double ptnsPerdidos = abs(chute - num) / (double)2;
+                pontos -= ptnsPerdidos;
+                if(acerto(acertou, maior, pontos) == 1) return 0;
             }
 
             printf("Você exauriu todas suas tentativas! Tente jogar novamente...\n");
+            printf("Total de pontos: %.1f\n", pontos);
 
         } else if(lim == 0) {
-            int tent = 0;
+            int tent = 1;
 
             while(1) {
             
@@ -69,7 +80,9 @@ int main() {
 
                 int acertou = chute == num;
                 int maior = chute > num;
-                if(acerto(acertou, maior) == 1) break;
+                double ptnsPerdidos = abs(chute - num) / 2.0;
+                pontos -= ptnsPerdidos;
+                if(acerto(acertou, maior, pontos) == 1) break;
                 tent ++;
             }
         } else {
