@@ -6,7 +6,11 @@
 
 int acerto(int acertou, int maior, double ptns) {
     if(acertou) {
-        printf("Parabéns! Você acertou o número <3\n");
+        printf("Parabéns! Você acertou o número <3\n\n");
+        printf("      |\\      _,,,---,,_\n");
+        printf("ZZZzz /,`.-'`'    -.  ;-;;,_\n");
+        printf("     |,4-  ) )-,_. ,\\ (  `'-'\n");
+        printf("    '---''(_/--'  `-'\\_)\n\n");
         printf("Total de pontos: %.1f\n", ptns);
         return 1;
     }
