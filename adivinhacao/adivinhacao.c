@@ -33,13 +33,14 @@ int main() {
 
     int numeroGrandao = rand();
     int num = numeroGrandao % 100;
-    int chute, lim;
+    int chute;
     double pontos = 1000.0;
 
     while(1) {
+        int lim;
         printf("Deseja jogar com número de tentativas limitadas?\n");
         printf("(0) Não | (1) Sim : ");
-        scanf("%d", &lim);
+        scanf(" %d", &lim);
 
         if(lim == 1) {
             for (int i = 1; i <= NUMERO_DE_TENTATIVAS; i++) {
@@ -64,7 +65,6 @@ int main() {
             }
 
             printf("Você exauriu todas suas tentativas! Tente jogar novamente...\n");
-            printf("Total de pontos: %.1f\n", pontos);
 
         } else if(lim == 0) {
             int tent = 1;
@@ -91,7 +91,7 @@ int main() {
             }
         } else {
             printf("*** Erro 404 ***\n");
-            continue;
+            break;
         }
         break;
     }
