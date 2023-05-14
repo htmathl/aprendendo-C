@@ -29,6 +29,24 @@ void abertura() {
     printf("********************************\n\n");
 }
 
+void adicionaPalavra() {
+    char quer;
+
+    printf("Você deseja adicionar uma nova palavra? (S/N)");
+    scanf(" %c", &quer);
+
+    if(quer == "S" || quer == "s") {
+        char novaPalavra[20];
+
+        printf("Qual a nova palavra? ");
+        scanf("%s", novaPalavra);
+
+        FILE* f;
+
+        f = fopen("palavra.txt", "r+");
+    }
+}
+
 void escolhePalavra() {
     FILE* f;
 
