@@ -1,15 +1,24 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "mapa.h"
 
+void copiaMapa(MAPA* destino, MAPA* origem) {
+    destino->linhas = origem->linhas;
+    destino->colunas = origem->colunas;
+
+    alocaMapa(destino);
+    for(int i = 0; i < origem->linhas; i++) {
+        strcpy(destino->matriz[i], origem->matriz[i]);
+    }
+}
+
 void andandoMapa(MAPA* m, int destinoX, 
-    int destinoY, int* origemX, int* OrigemY) {
+    int destinoY, int origemX, int OrigemY) {
     
-    char personagem = m -> matriz[*origemX][*OrigemY];
+    char personagem = m -> matriz[origemX][OrigemY];
     m -> matriz[destinoX][destinoY] = personagem;
-    m -> matriz[*origemX][*OrigemY] = VAZIO;
-    *origemX = destinoX;
-    *OrigemY = destinoY;
+    m -> matriz[origemX][OrigemY] = VAZIO;
 }
 
 int ehVazia(MAPA* m, int x, int y) {
