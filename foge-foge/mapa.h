@@ -16,7 +16,7 @@ struct posicao {
 };
 typedef struct posicao POSICAO;
 
-void encontraMapa(MAPA* m, POSICAO* p, char c);
+int encontraMapa(MAPA* m, POSICAO* p, char c);
 void leMapa(MAPA* m);
 void alocaMapa(MAPA* m);
 void imprimeMapa(MAPA* m);

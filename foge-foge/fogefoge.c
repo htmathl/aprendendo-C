@@ -1,11 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "fogefoge.h"
 #include "mapa.h"
 
 MAPA m;
 POSICAO heroi;
+
+int escolherPosicaoFantasma(int xAtual, int yAtual, int* xDestino, int* yDestino) {
+    int opcoes[4][2] = {
+        { xAtual, yAtual+1 },
+        { xAtual+1, yAtual },
+        { xAtual, yAtual-1 },
+        { xAtual-1, yAtual }
+    };
+
+    srand(time(0));
+    for(int i = 0; i < 10; i++) {
+        int posicao = rand() % 4;
+
+        if(ehValida(&m, opcoes[posicao][0], opcoes[posicao][1]) &&
+           ehVazia(&m, opcoes[posicao][0], opcoes[posicao][1])) {
+            *xDestino = opcoes[posicao][0];
+            *yDestino = opcoes[posicao][1];
+            
+            return 1;
+        }
+    }
+    
+    return 0;
+}
 
 void andaFantasmas() {
     MAPA copia;
@@ -14,9 +39,15 @@ void andaFantasmas() {
 
     for(int i = 0; i < m.linhas; i++) {
         for(int j = 0; j < m.colunas; j++) {
-            if(copia.matriz[i][j] == FANTASMA)
-                if(ehValida(&m, i, j+1) && ehVazia(&m, i, j+1))
-                    andandoMapa(&m, i, j+1, i, j);
+            if(copia.matriz[i][j] == FANTASMA) {
+
+                int xDestino, yDestino;
+                int encontrou = escolherPosicaoFantasma(i, j,
+                &xDestino, &yDestino);
+
+                if(encontrou)
+                    andandoMapa(&m, xDestino, yDestino, i, j);
+            }
         }
     }
 
@@ -24,7 +55,8 @@ void andaFantasmas() {
 }
 
 int acabou() {
-    return 0;
+    POSICAO pos;
+    return !encontraMapa(&m, &pos, HEROI);
 }
 
 void move(char direcao) {

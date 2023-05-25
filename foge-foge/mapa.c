@@ -31,7 +31,7 @@ int ehValida(MAPA* m, int x, int y) {
     return 1;
 }
 
-void encontraMapa(MAPA* m, POSICAO* p, char c) {
+int encontraMapa(MAPA* m, POSICAO* p, char c) {
     //acha o foge-foge
     for (int i = 0; i < m->linhas; i++) {
         for (int j = 0; j < m->colunas; j++) {
