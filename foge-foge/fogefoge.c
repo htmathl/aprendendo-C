@@ -20,8 +20,7 @@ int escolherPosicaoFantasma(int xAtual, int yAtual, int* xDestino, int* yDestino
     for(int i = 0; i < 10; i++) {
         int posicao = rand() % 4;
 
-        if(ehValida(&m, opcoes[posicao][0], opcoes[posicao][1]) &&
-           ehVazia(&m, opcoes[posicao][0], opcoes[posicao][1])) {
+        if(podeAndar(&m, FANTASMA, opcoes[posicao][0], opcoes[posicao][1])) {
             *xDestino = opcoes[posicao][0];
             *yDestino = opcoes[posicao][1];
             
@@ -83,8 +82,7 @@ void move(char direcao) {
         printf("** Você só pode usar w,a,s ou d para se mover **\n");
     }
 
-    if(!ehValida(&m, proxX, proxY)) return;
-    if(!ehVazia(&m, proxX, proxY)) return;
+    if(!podeAndar(&m, HEROI, proxX, proxY)) return;
 
     andandoMapa(&m, proxX, proxY, heroi.x, heroi.y);
     heroi.x = proxX;

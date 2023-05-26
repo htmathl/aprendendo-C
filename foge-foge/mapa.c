@@ -31,6 +31,19 @@ int ehValida(MAPA* m, int x, int y) {
     return 1;
 }
 
+int ehParede(MAPA* m, int x, int y) {
+    return m->matriz[x][y] == PAREDE_HORIZONTAL ||
+    m->matriz[x][y] == PAREDE_VERTICAL;
+}
+
+int ehPersonagem(MAPA* m, char personagem, int x, int y) {
+    return m->matriz[x][y] == personagem;
+}
+
+int podeAndar(MAPA* m, char personagem, int x, int y) {
+    return ehValida(m, x, y) && !ehParede(m, x, y) && !ehPersonagem(m, personagem, x, y);
+} 
+
 int encontraMapa(MAPA* m, POSICAO* p, char c) {
     //acha o foge-foge
     for (int i = 0; i < m->linhas; i++) {
