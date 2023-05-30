@@ -51,10 +51,12 @@ int encontraMapa(MAPA* m, POSICAO* p, char c) {
             if(m->matriz[i][j] == c) {
                 p->x = i;
                 p->y = j;
-                break;
+                return 1;
             }
         }
     }
+
+    return 0;
 }
 
 void liberaMapa(MAPA* m) {
@@ -86,11 +88,5 @@ void alocaMapa(MAPA* m) {
     m->matriz = malloc(sizeof(char*) * m->linhas);
     for(int i = 0; i < m->linhas; i++) {
         m->matriz[i] = malloc(sizeof(char) * (m->colunas+1));
-    }
-}
-
-void imprimeMapa(MAPA* m) {
-    for(int i = 0; i < 5; i++) {
-        printf("%s\n", m->matriz[i]);
     }
 }

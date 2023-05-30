@@ -4,9 +4,11 @@
 #include <time.h>
 #include "fogefoge.h"
 #include "mapa.h"
+#include "ui.h"
 
 MAPA m;
 POSICAO heroi;
+int temPilula = 0;
 
 int escolherPosicaoFantasma(int xAtual, int yAtual, int* xDestino, int* yDestino) {
     int opcoes[4][2] = {
@@ -78,15 +80,44 @@ void move(char direcao) {
     case DIREITA:
         proxY++;
         break;
+    case BOMBA:
+        defineAsPosDoExplodePilula();
+        break;
     default:
         printf("** Você só pode usar w,a,s ou d para se mover **\n");
     }
 
     if(!podeAndar(&m, HEROI, proxX, proxY)) return;
 
+    if(ehPersonagem(&m, PILULA, proxX, proxY)) temPilula = 1 ;
+
     andandoMapa(&m, proxX, proxY, heroi.x, heroi.y);
     heroi.x = proxX;
     heroi.y = proxY;
+}
+
+void defineAsPosDoExplodePilula() {
+    if(!temPilula) return;
+
+    explodePilula(heroi.x, heroi.y, 0, 1, 3);
+    explodePilula(heroi.x, heroi.y, 0, -1, 3);
+    explodePilula(heroi.x, heroi.y, 1, 0, 3);
+    explodePilula(heroi.x, heroi.y, -1, 0, 3);
+
+    temPilula = 0;
+}
+
+void explodePilula(int x, int y, int somax, int somay, int qtd) {
+    if(qtd == 0) return;
+
+    int novox = x + somax;
+    int novoy = y + somay;
+
+    if(!ehValida(&m, novox, novoy)) return;
+    if(ehParede(&m, novox, novoy)) return;
+
+    m.matriz[novox][novoy] = VAZIO;
+    explodePilula(novox, novoy, somax, somay, qtd-1);
 }
 
 int main() {
@@ -95,6 +126,7 @@ int main() {
     encontraMapa(&m, &heroi, HEROI);
 
     do {
+        printf("Tem pilula: %s\n", (temPilula ? "SIM" : "NÃO"));
         imprimeMapa(&m);
         
         char comando;
